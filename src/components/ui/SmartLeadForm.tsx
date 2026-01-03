@@ -6,8 +6,6 @@ import { Send, Loader2, CheckCircle } from 'lucide-react';
 export default function SmartLeadForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-
-  // משתנה הסביבה שהגדרנו ב-Netlify
   const WEBHOOK_URL = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL; 
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -21,15 +19,16 @@ export default function SmartLeadForm() {
       eventType: formData.get('eventType'),
       guests: formData.get('guests'),
       date: new Date().toISOString(),
-      source: 'Multibrawn Homepage V1'
+      source: 'Multibrawn Homepage'
     };
 
     try {
       if (!WEBHOOK_URL) {
-        console.error('Missing Webhook URL');
-        // במצב פיתוח נדמה הצלחה כדי לא לתקוע אותך
+        // Fallback for demo/dev without webhook
+        console.log('Form submitted (No Webhook):', data);
         setSuccess(true);
         setTimeout(() => setSuccess(false), 3000);
+        (e.target as HTMLFormElement).reset();
         return;
       }
 
@@ -68,58 +67,32 @@ export default function SmartLeadForm() {
     <div className="w-full max-w-lg mx-auto bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl shadow-2xl">
       <h3 className="text-2xl font-bold text-white text-center mb-6">מצאו לי את המקום המושלם</h3>
       <form onSubmit={handleSubmit} className="space-y-4">
-        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1">
             <label className="text-white/80 text-sm">שם מלא</label>
-            <input 
-              name="name" 
-              required 
-              className="w-full p-3 bg-white/80 rounded-lg focus:bg-white focus:ring-2 focus:ring-amber-500 outline-none transition-all text-gray-900"
-              placeholder="ישראל ישראלי" 
-            />
+            <input name="name" required className="w-full p-3 bg-white/80 rounded-lg text-gray-900" placeholder="ישראל ישראלי" />
           </div>
           <div className="space-y-1">
             <label className="text-white/80 text-sm">טלפון</label>
-            <input 
-              name="phone" 
-              type="tel" 
-              required 
-              className="w-full p-3 bg-white/80 rounded-lg focus:bg-white focus:ring-2 focus:ring-amber-500 outline-none transition-all text-gray-900"
-              placeholder="050-0000000" 
-            />
+            <input name="phone" type="tel" required className="w-full p-3 bg-white/80 rounded-lg text-gray-900" placeholder="050-0000000" />
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1">
-            <label className="text-white/80 text-sm">סוג החופשה/אירוע</label>
-            <select name="eventType" className="w-full p-3 bg-white/80 rounded-lg focus:bg-white focus:ring-2 focus:ring-amber-500 outline-none transition-all text-gray-900">
-              <option value="vacation">חופשה משפחתית</option>
-              <option value="couple">חופשה זוגית</option>
-              <option value="villa">וילה למסיבה</option>
-              <option value="event">אירוע עסקי</option>
-              <option value="wedding">חתונה / אירוע גדול</option>
+            <label className="text-white/80 text-sm">סוג אירוע</label>
+            <select name="eventType" className="w-full p-3 bg-white/80 rounded-lg text-gray-900">
+              <option value="vacation">חופשה</option>
+              <option value="event">אירוע</option>
             </select>
           </div>
           <div className="space-y-1">
-            <label className="text-white/80 text-sm">כמות אורחים</label>
-            <input 
-              name="guests" 
-              type="number" 
-              className="w-full p-3 bg-white/80 rounded-lg focus:bg-white focus:ring-2 focus:ring-amber-500 outline-none transition-all text-gray-900"
-              placeholder="10" 
-            />
+            <label className="text-white/80 text-sm">אורחים</label>
+            <input name="guests" type="number" className="w-full p-3 bg-white/80 rounded-lg text-gray-900" placeholder="10" />
           </div>
         </div>
-
-        <button 
-          type="submit" 
-          disabled={loading}
-          className="w-full py-4 mt-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-bold text-lg rounded-xl shadow-lg transform hover:scale-[1.02] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
+        <button type="submit" disabled={loading} className="w-full py-4 mt-2 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-xl flex justify-center items-center gap-2">
           {loading ? <Loader2 className="animate-spin" /> : <Send className="w-5 h-5" />}
-          {loading ? 'שולח לערדית...' : 'התחל חיפוש חכם'}
+          {loading ? 'שולח...' : 'מצא לי מקום'}
         </button>
       </form>
     </div>
