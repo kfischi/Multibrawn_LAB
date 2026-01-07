@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import styles from './ChatBot.module.css';
 
 interface Message {
@@ -11,42 +9,20 @@ interface Message {
   content: string;
   timestamp: Date;
   options?: string[];
-  isMultiSelect?: boolean;
-}
-
-interface UserData {
-  name?: string;
-  phone?: string;
-  propertyType?: string;
-  location?: string;
-  guestCount?: string;
-  dates?: string;
-  specificDate?: string;
-  budget?: string;
-  shabbat?: string;
-  mangal?: string;
-  eventGuests?: string;
-  eventVenue?: string;
-  eventProduction?: string;
-  // Shabbat Hatan specific
-  shabbatHatanGuests?: string;
-  shabbatHatanDate?: string;
-  kashrut?: string;
-  supervisor?: string;
 }
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [userData, setUserData] = useState<UserData>({});
-  const [currentStep, setCurrentStep] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [inputType, setInputType] = useState<'text' | 'tel' | 'date'>('text');
   const [showInput, setShowInput] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [sessionId, setSessionId] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const N8N_WEBHOOK_URL = process.env.NEXT_PUBLIC_N8N_CHATBOT_URL || 'https://n8n.multibrawn.co.il/webhook-test/chatbot';
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -61,11 +37,13 @@ export default function ChatBot() {
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
+      // Generate session ID
+      const newSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      setSessionId(newSessionId);
+      
+      // Start conversation
       setTimeout(() => {
-        addBotMessage(
-          'שלום! 👋 אני ערדית, העוזרת הדיגיטלית של MULTIBRAWN!\nאעזור לך למצוא את המקום המושלם לחופשה. 🏖️',
-          ['בואי נתחיל! 🚀']
-        );
+        sendMessageToN8N('__START__', newSessionId);
       }, 500);
     }
   }, [isOpen]);
@@ -77,20 +55,16 @@ export default function ChatBot() {
   }, [showInput]);
 
   const addBotMessage = (content: string, options?: string[]) => {
-    setIsTyping(true);
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now().toString(),
-          role: 'assistant',
-          content,
-          timestamp: new Date(),
-          options,
-        },
-      ]);
-      setIsTyping(false);
-    }, 800);
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: Date.now().toString(),
+        role: 'assistant',
+        content,
+        timestamp: new Date(),
+        options,
+      },
+    ]);
   };
 
   const addUserMessage = (content: string) => {
@@ -105,338 +79,102 @@ export default function ChatBot() {
     ]);
   };
 
+  const sendMessageToN8N = async (userMessage: string, session: string = sessionId) => {
+    try {
+      setIsTyping(true);
+
+      const response = await fetch(N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          session_id: session,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response from server');
+      }
+
+      const data = await response.json();
+
+      setIsTyping(false);
+
+      // Handle response from n8n
+      if (data.message) {
+        addBotMessage(data.message, data.options || []);
+      }
+
+      // Handle special actions
+      if (data.action === 'show_input') {
+        setShowInput(true);
+      } else if (data.action === 'hide_input') {
+        setShowInput(false);
+      } else if (data.action === 'show_properties') {
+        // Display properties
+        if (data.properties && data.properties.length > 0) {
+          displayProperties(data.properties);
+        }
+      } else if (data.action === 'send_whatsapp') {
+        // Trigger WhatsApp with summary
+        sendToWhatsApp(data.summary);
+      }
+
+    } catch (error) {
+      console.error('Error sending message:', error);
+      setIsTyping(false);
+      addBotMessage(
+        'אופס! נראה שיש בעיה בחיבור. 😕\n\nאתה יכול לשלוח לנו הודעה ישירות ב-WhatsApp:',
+        ['פתח WhatsApp 💬']
+      );
+    }
+  };
+
+  const displayProperties = (properties: any[]) => {
+    const propertiesMessage = properties.map((prop, index) => {
+      const medal = index === 0 ? '🏆' : index === 1 ? '🥈' : '🥉';
+      return `${medal} *${prop.name}*\n📍 ${prop.location}\n👥 עד ${prop.max_guests} אורחים\n💰 ₪${prop.price_per_night.toLocaleString()}/לילה\n⭐ התאמה: ${prop.match_percentage}%`;
+    }).join('\n\n─────────────\n\n');
+
+    addBotMessage(
+      `מצאתי ${properties.length} אופציות מעולות! 🎉\n\n${propertiesMessage}\n\nרוצה פרטים נוספים?`,
+      ['כן, שלח לי פרטים!', 'חפש אפשרויות אחרות']
+    );
+  };
+
+  const sendToWhatsApp = (summary: string) => {
+    const message = encodeURIComponent(
+      `היי MULTIBRAWN! 👋\n\n${summary}\n\nאשמח לקבל הצעות מתאימות!`
+    );
+    window.open(`https://wa.me/972523983394?text=${message}`, '_blank');
+  };
+
   const handleInputSubmit = (e?: React.FormEvent) => {
     e?.preventDefault();
     if (!inputValue.trim()) return;
 
-    if (currentStep === 1) {
-      // Name
-      addUserMessage(inputValue);
-      setUserData((prev) => ({ ...prev, name: inputValue }));
-      setInputValue('');
-      setShowInput(false);
-      setCurrentStep(2);
-      setTimeout(() => {
-        addBotMessage('נעים מאוד! 😊\nמה מספר הטלפון/WhatsApp שלך?');
-        setInputType('tel');
-        setShowInput(true);
-      }, 1000);
-    } else if (currentStep === 2) {
-      // Phone
-      if (!/^05\d{8}$/.test(inputValue.replace(/[-\s]/g, ''))) {
-        addBotMessage('אופס! נראה שהמספר לא תקין. אנא הזן מספר טלפון ישראלי תקין (05XXXXXXXX)');
-        setInputValue('');
-        return;
-      }
-      addUserMessage(inputValue);
-      setUserData((prev) => ({ ...prev, phone: inputValue }));
-      setInputValue('');
-      setShowInput(false);
-      setCurrentStep(3);
-      setTimeout(() => {
-        addBotMessage(
-          'מעולה! 👌\nאיזה סוג שירות מעניין אותך?',
-          [
-            'צימר רומנטי 💕', 
-            'וילה משפחתית 🏡', 
-            'דירת נופש 🏖️', 
-            'מלון בוטיק 🏨',
-            'שבת חתן 🕍',  // ← 🆕 חדש!
-            'מתחם אירועים 🎉'
-          ]
-        );
-      }, 1000);
-    } else if (currentStep === 6 && userData.dates === 'תאריך מסוים 📅') {
-      // Specific date
-      addUserMessage(inputValue);
-      setUserData((prev) => ({ ...prev, specificDate: inputValue }));
-      setInputValue('');
-      setShowInput(false);
-      setCurrentStep(7);
-      setTimeout(() => {
-        addBotMessage(
-          'נהדר! 💰\nמה התקציב שלך ללילה?',
-          ['עד 500 ₪', '500-1000 ₪', '1000-2000 ₪', '2000+ ₪', 'גמיש 💪']
-        );
-      }, 1000);
-    } else if (currentStep === 21) {
-      // Shabbat Hatan date
-      addUserMessage(inputValue);
-      setUserData((prev) => ({ ...prev, shabbatHatanDate: inputValue }));
-      setInputValue('');
-      setShowInput(false);
-      setCurrentStep(22);
-      setTimeout(() => {
-        addBotMessage(
-          'מעולה! 💰\nמה התקציב שלכם לשבת חתן?',
-          ['עד 10,000 ₪', '10,000-20,000 ₪', '20,000-40,000 ₪', '40,000+ ₪', 'גמיש 💪']
-        );
-      }, 1000);
-    }
+    const userMessage = inputValue;
+    addUserMessage(userMessage);
+    setInputValue('');
+    
+    // Send to n8n
+    sendMessageToN8N(userMessage);
   };
 
-  const handleNextStep = (option: string) => {
+  const handleOptionClick = (option: string) => {
     addUserMessage(option);
 
-    switch (currentStep) {
-      case 0: // Start
-        setCurrentStep(1);
-        setTimeout(() => {
-          addBotMessage('בואי נתחיל! 🎯\nמה השם שלך?');
-          setInputType('text');
-          setShowInput(true);
-        }, 1000);
-        break;
-
-      case 3: // Property type
-        setUserData((prev) => ({ ...prev, propertyType: option }));
-        
-        if (option === 'מתחם אירועים 🎉') {
-          setCurrentStep(10); // Event flow
-          setTimeout(() => {
-            addBotMessage(
-              'אירוע! איזה כיף! 🎊\nכמה אנשים צפויים?',
-              ['עד 50 אורחים', '50-100 אורחים', '100-200 אורחים', '200+ אורחים']
-            );
-          }, 1000);
-        } else if (option === 'שבת חתן 🕍') {
-          setCurrentStep(20); // ← 🆕 Shabbat Hatan flow
-          setTimeout(() => {
-            addBotMessage(
-              'שבת חתן! מזל טוב! 🎉💍\nבאיזה אזור אתם מחפשים?',
-              ['צפון 🏔️', 'מרכז 🌆', 'דרום 🏜️', 'ירושלים והסביבה 🕍']
-            );
-          }, 1000);
-        } else {
-          setCurrentStep(4);
-          setTimeout(() => {
-            addBotMessage(
-              'מעולה! 👌\nבאיזה אזור אתה מחפש?',
-              ['צפון 🏔️', 'מרכז 🌆', 'דרום 🏜️', 'ירושלים והסביבה 🕍', 'לא משנה לי 🌍']
-            );
-          }, 1000);
-        }
-        break;
-
-      case 4: // Location
-        setUserData((prev) => ({ ...prev, location: option }));
-        setCurrentStep(5);
-        setTimeout(() => {
-          addBotMessage(
-            'נהדר! 🎊\nלכמה אורחים אתה צריך?',
-            ['2 אורחים 👫', '2-4 אורחים 👨‍👩‍👧', '4-8 אורחים 👨‍👩‍👧‍👦', '8+ אורחים 👨‍👩‍👧‍👦👨‍👩‍👧‍👦']
-          );
-        }, 1000);
-        break;
-
-      case 5: // Guest count
-        setUserData((prev) => ({ ...prev, guestCount: option }));
-        setCurrentStep(6);
-        setTimeout(() => {
-          addBotMessage(
-            'מצוין! 📅\nמתי אתה מתכנן להגיע?',
-            ['סופ״ש הקרוב 🎯', 'תוך חודש 📆', 'תאריך מסוים 📅', 'עדיין לא החלטתי 🤔']
-          );
-        }, 1000);
-        break;
-
-      case 6: // Dates
-        setUserData((prev) => ({ ...prev, dates: option }));
-        
-        if (option === 'תאריך מסוים 📅') {
-          setTimeout(() => {
-            addBotMessage('איזה תאריך? (לדוגמה: 15/01/2025)');
-            setInputType('text');
-            setShowInput(true);
-          }, 1000);
-        } else {
-          setCurrentStep(7);
-          setTimeout(() => {
-            addBotMessage(
-              'נהדר! 💰\nמה התקציב שלך ללילה?',
-              ['עד 500 ₪', '500-1000 ₪', '1000-2000 ₪', '2000+ ₪', 'גמיש 💪']
-            );
-          }, 1000);
-        }
-        break;
-
-      case 7: // Budget
-        setUserData((prev) => ({ ...prev, budget: option }));
-        setCurrentStep(8);
-        setTimeout(() => {
-          addBotMessage(
-            'שומרים שבת? ⛪',
-            ['כן, שומרים שבת 🕯️', 'לא שומרים ✨']
-          );
-        }, 1000);
-        break;
-
-      case 8: // Shabbat
-        setUserData((prev) => ({ ...prev, shabbat: option }));
-        setCurrentStep(9);
-        setTimeout(() => {
-          addBotMessage(
-            'צריכים מנגל/גריל? 🔥',
-            ['כן, חייבים מנגל! 🍖', 'לא צריך 😊']
-          );
-        }, 1000);
-        break;
-
-      case 9: // Mangal
-        setUserData((prev) => ({ ...prev, mangal: option }));
-        setCurrentStep(99);
-        setTimeout(() => {
-          finishConversation();
-        }, 1000);
-        break;
-
-      // Event flow (10-13)
-      case 10: // Event guests
-        setUserData((prev) => ({ ...prev, eventGuests: option }));
-        setCurrentStep(11);
-        setTimeout(() => {
-          addBotMessage(
-            'יש לכם מקום לאירוע או צריכים מתחם? 🎪',
-            ['יש לנו מקום ✅', 'צריכים מתחם 🏛️']
-          );
-        }, 1000);
-        break;
-
-      case 11: // Event venue
-        setUserData((prev) => ({ ...prev, eventVenue: option }));
-        setCurrentStep(12);
-        setTimeout(() => {
-          addBotMessage(
-            'צריכים שירות הפקת אירועים מלא? 🎬',
-            ['כן, הפקה מלאה! 🎉', 'לא, רק המקום 📍']
-          );
-        }, 1000);
-        break;
-
-      case 12: // Event production
-        setUserData((prev) => ({ ...prev, eventProduction: option }));
-        setCurrentStep(13);
-        setTimeout(() => {
-          addBotMessage(
-            'מעולה! 💰\nמה התקציב שלכם לאירוע?',
-            ['עד 50,000 ₪', '50,000-100,000 ₪', '100,000-200,000 ₪', '200,000+ ₪', 'גמיש 💪']
-          );
-        }, 1000);
-        break;
-
-      case 13: // Event budget
-        setUserData((prev) => ({ ...prev, budget: option }));
-        setCurrentStep(99);
-        setTimeout(() => {
-          finishConversation();
-        }, 1000);
-        break;
-
-      // ← 🆕 Shabbat Hatan flow (20-24)
-      case 20: // Shabbat Hatan location
-        setUserData((prev) => ({ ...prev, location: option }));
-        setCurrentStep(21);
-        setTimeout(() => {
-          addBotMessage('באיזה תאריך תתקיים שבת החתן? (לדוגמה: 15/01/2025)');
-          setInputType('text');
-          setShowInput(true);
-        }, 1000);
-        break;
-
-      case 21: // Handled in handleInputSubmit
-
-      case 22: // Shabbat Hatan budget
-        setUserData((prev) => ({ ...prev, budget: option }));
-        setCurrentStep(23);
-        setTimeout(() => {
-          addBotMessage(
-            'כמה אורחים צפויים לשבת החתן? 👥',
-            ['עד 30 אורחים', '30-50 אורחים', '50-100 אורחים', '100+ אורחים']
-          );
-        }, 1000);
-        break;
-
-      case 23: // Shabbat Hatan guests
-        setUserData((prev) => ({ ...prev, shabbatHatanGuests: option }));
-        setCurrentStep(24);
-        setTimeout(() => {
-          addBotMessage(
-            'איזו רמת כשרות אתם צריכים? 🍽️',
-            ['רבנות רגילה ✅', 'רבנות מהדרין ⭐', 'בד"ץ ⭐⭐', 'לא משנה 🤷‍♂️']
-          );
-        }, 1000);
-        break;
-
-      case 24: // Kashrut
-        setUserData((prev) => ({ ...prev, kashrut: option }));
-        setCurrentStep(25);
-        setTimeout(() => {
-          addBotMessage(
-            'צריכים משגיח צמוד לשבת? 👨‍🍳',
-            ['כן, חובה! ✅', 'לא צריך 🙅']
-          );
-        }, 1000);
-        break;
-
-      case 25: // Supervisor
-        setUserData((prev) => ({ ...prev, supervisor: option }));
-        setCurrentStep(99);
-        setTimeout(() => {
-          finishShabbatHatanConversation();
-        }, 1000);
-        break;
-    }
-  };
-
-  const finishConversation = () => {
-    addBotMessage(
-      'מושלם! 🎉\n\nקיבלתי את כל הפרטים.\nעכשיו אשלח את הכל ל-WhatsApp ונחזור אליך במהרה עם הצעות מדויקות! 📱',
-      ['שלח ל-WhatsApp ✅']
-    );
-  };
-
-  const finishShabbatHatanConversation = () => {
-    addBotMessage(
-      'מושלם! 🎉💍\n\nקיבלתי את כל הפרטים לשבת החתן.\nעכשיו אשלח את הכל ל-WhatsApp ונחזור אליך במהרה עם הצעות מתאימות!\n\n📖 בינתיים, מוזמנים לקרוא עוד על שבת חתן בדף המיוחד שלנו:',
-      ['שלח ל-WhatsApp ✅', 'קרא עוד על שבת חתן 📖']
-    );
-  };
-
-  const sendToWhatsApp = () => {
-    const responses = [];
-    
-    if (userData.name) responses.push(`👤 שם: ${userData.name}`);
-    if (userData.phone) responses.push(`📱 טלפון: ${userData.phone}`);
-    if (userData.propertyType) responses.push(`🏠 סוג שירות: ${userData.propertyType}`);
-    
-    if (userData.propertyType === 'מתחם אירועים 🎉') {
-      if (userData.eventGuests) responses.push(`👥 מספר אורחים: ${userData.eventGuests}`);
-      if (userData.eventVenue) responses.push(`📍 מקום: ${userData.eventVenue}`);
-      if (userData.eventProduction) responses.push(`🎬 הפקה: ${userData.eventProduction}`);
-      if (userData.budget) responses.push(`💰 תקציב: ${userData.budget}`);
-    } else if (userData.propertyType === 'שבת חתן 🕍') {
-      // ← 🆕 Shabbat Hatan data
-      if (userData.location) responses.push(`📍 אזור: ${userData.location}`);
-      if (userData.shabbatHatanDate) responses.push(`📅 תאריך: ${userData.shabbatHatanDate}`);
-      if (userData.budget) responses.push(`💰 תקציב: ${userData.budget}`);
-      if (userData.shabbatHatanGuests) responses.push(`👥 אורחים: ${userData.shabbatHatanGuests}`);
-      if (userData.kashrut) responses.push(`🍽️ כשרות: ${userData.kashrut}`);
-      if (userData.supervisor) responses.push(`👨‍🍳 משגיח: ${userData.supervisor}`);
-    } else {
-      if (userData.location) responses.push(`📍 אזור: ${userData.location}`);
-      if (userData.guestCount) responses.push(`👥 אורחים: ${userData.guestCount}`);
-      if (userData.dates) responses.push(`📅 תאריכים: ${userData.dates}`);
-      if (userData.specificDate) responses.push(`📆 תאריך מדויק: ${userData.specificDate}`);
-      if (userData.budget) responses.push(`💰 תקציב: ${userData.budget}`);
-      if (userData.shabbat) responses.push(`⛪ שבת: ${userData.shabbat}`);
-      if (userData.mangal) responses.push(`🔥 מנגל: ${userData.mangal}`);
+    // Special handling for WhatsApp button
+    if (option === 'פתח WhatsApp 💬') {
+      window.open('https://wa.me/972523983394', '_blank');
+      return;
     }
 
-    const message = encodeURIComponent(
-      `היי MULTIBRAWN! 👋\n\nזה סיכום התשובות שלי מהצ'אט:\n\n${responses.join('\n')}\n\nאשמח לקבל הצעות מתאימות!`
-    );
-
-    window.open(`https://wa.me/972523983394?text=${message}`, '_blank');
+    // Send option to n8n
+    sendMessageToN8N(option);
   };
 
   const toggleChat = () => {
@@ -473,8 +211,8 @@ export default function ChatBot() {
         <div className={styles.chatWindow}>
           <div className={styles.chatHeader}>
             <div className={styles.headerInfo}>
-              <h3>ערדית - העוזרת שלכם</h3>
-              <p>🟢 אונליין עכשיו</p>
+              <h3>ערדית - העוזרת החכמה שלכם 🤖</h3>
+              <p>🟢 מופעלת ע"י AI</p>
             </div>
           </div>
 
@@ -484,20 +222,12 @@ export default function ChatBot() {
                 <div className={`${styles.message} ${styles[message.role]}`}>
                   <div className={styles.messageContent}>{message.content}</div>
                   
-                  {message.options && (
+                  {message.options && message.options.length > 0 && (
                     <div className={styles.options}>
                       {message.options.map((option, index) => (
                         <button
                           key={index}
-                          onClick={() => {
-                            if (currentStep === 99 && option === 'שלח ל-WhatsApp ✅') {
-                              sendToWhatsApp();
-                            } else if (currentStep === 99 && option === 'קרא עוד על שבת חתן 📖') {
-                              window.open('/shabbat-hatan', '_blank');
-                            } else {
-                              handleNextStep(option);
-                            }
-                          }}
+                          onClick={() => handleOptionClick(option)}
                           className={styles.optionButton}
                         >
                           {option}
@@ -528,16 +258,10 @@ export default function ChatBot() {
             <form onSubmit={handleInputSubmit} className={styles.inputArea}>
               <input
                 ref={inputRef}
-                type={inputType}
+                type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder={
-                  inputType === 'tel' 
-                    ? '05XXXXXXXX' 
-                    : inputType === 'date'
-                    ? 'DD/MM/YYYY'
-                    : 'הקלד כאן...'
-                }
+                placeholder="הקלד כאן..."
                 className={styles.input}
               />
               <button type="submit" className={styles.sendButton}>
