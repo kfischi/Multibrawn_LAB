@@ -83,7 +83,7 @@ export default function ChatBot() {
     try {
       setIsTyping(true);
 
-      const response = await fetch(N8N_WEBHOOK_URL, {
+     const response = await fetch('https://n8n.multibrawn.co.il/webhook/multibrawn-ai-chatbot', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
