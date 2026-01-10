@@ -1,6 +1,6 @@
 import { getLocations } from '@/lib/cloudinary';
 import { CldImage } from 'next-cloudinary';
-import * as motion from 'framer-motion/client'; // שימוש בגרסת הלקוח
+import { motion } from 'framer-motion'; 
 
 export default async function GalleryPage() {
   const locations = await getLocations();
