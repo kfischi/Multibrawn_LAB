@@ -1,250 +1,79 @@
-/* Contact Page - Clean & Simple */
-
 .contactPage {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-}
-
-.hero {
-  background: linear-gradient(135deg, var(--color-cyan) 0%, var(--color-purple) 50%, var(--color-pink) 100%);
-  padding: 80px 24px 60px;
-  text-align: center;
-  color: white;
-}
-
-.title {
-  font-size: 48px;
-  font-weight: 800;
-  margin: 0 0 16px 0;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
-}
-
-.subtitle {
-  font-size: 20px;
-  margin: 0;
-  opacity: 0.95;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 24px;
-}
-
-/* Contact Cards Grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  margin-bottom: 60px;
-}
-
-.contactCard {
-  background: white;
-  border-radius: 20px;
-  padding: 32px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  text-decoration: none;
-  color: inherit;
-  border: 2px solid transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.contactCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(0, 224, 255, 0.2);
-  border-color: var(--color-cyan);
-}
-
-.chatCard {
-  background: linear-gradient(135deg, rgba(0, 224, 255, 0.1) 0%, rgba(160, 107, 255, 0.1) 100%);
-  border: 2px solid var(--color-cyan);
-}
-
-.chatCard:hover {
-  background: linear-gradient(135deg, var(--color-cyan) 0%, var(--color-purple) 100%);
-  color: white;
-}
-
-.iconWrapper {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-cyan) 0%, var(--color-purple) 100%);
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 8px;
+  padding: 4rem 0;
 }
 
-.iconWrapper svg {
-  width: 32px;
-  height: 32px;
-  color: white;
-}
-
-.chatCard:hover .iconWrapper {
-  background: white;
-}
-
-.chatCard:hover .iconWrapper svg {
-  color: var(--color-cyan);
-}
-
-.cardTitle {
-  font-size: 22px;
-  font-weight: 700;
-  margin: 0;
-  color: #1f2937;
-}
-
-.chatCard:hover .cardTitle {
-  color: white;
-}
-
-.cardText {
-  font-size: 18px;
-  color: #6b7280;
-  margin: 0;
-  font-weight: 600;
-}
-
-.chatCard:hover .cardText {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.cardLink {
-  font-size: 14px;
-  color: var(--color-cyan);
-  font-weight: 700;
-  margin-top: 8px;
-}
-
-.chatCard:hover .cardLink {
-  color: white;
-}
-
-/* Info Section */
-.infoSection {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-bottom: 60px;
-}
-
-.infoCard {
-  background: white;
-  border-radius: 16px;
-  padding: 28px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-}
-
-.infoCard h3 {
-  font-size: 20px;
-  font-weight: 700;
-  margin: 0 0 12px 0;
-  color: #1f2937;
-}
-
-.infoCard p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #6b7280;
-  margin: 8px 0;
-}
-
-/* CTA Section */
-.cta {
-  background: linear-gradient(135deg, var(--color-cyan) 0%, var(--color-purple) 50%, var(--color-pink) 100%);
-  border-radius: 24px;
-  padding: 48px;
+.chatCard {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 3rem;
+  border-radius: var(--radius-xl);
   text-align: center;
+  border: 1px solid var(--glass-border);
+}
+
+.step h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.step p {
+  color: var(--color-text-secondary);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid var(--glass-border);
+  padding: 1.2rem;
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  border-color: var(--color-blue);
+}
+
+.nextBtn {
+  background: var(--gradient-primary);
   color: white;
+  padding: 1rem 2.5rem;
+  border-radius: var(--radius-full);
+  font-weight: 900;
+  box-shadow: var(--shadow-md);
 }
 
-.cta h2 {
-  font-size: 32px;
-  font-weight: 800;
-  margin: 0 0 16px 0;
+.optionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
-.cta p {
-  font-size: 18px;
-  margin: 0 0 28px 0;
-  opacity: 0.95;
-}
-
-.ctaButton {
-  background: white;
-  color: var(--color-purple);
-  border: none;
-  padding: 16px 48px;
-  border-radius: 12px;
-  font-size: 20px;
+.optionBtn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
   font-weight: 700;
-  cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-.ctaButton:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+.optionBtn:hover {
+  background: var(--gradient-pink);
+  color: white;
+  transform: translateY(-3px);
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .hero {
-    padding: 60px 20px 40px;
-  }
-
-  .title {
-    font-size: 36px;
-  }
-
-  .subtitle {
-    font-size: 18px;
-  }
-
-  .container {
-    padding: 40px 20px;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .contactCard {
-    padding: 24px;
-  }
-
-  .infoSection {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .cta {
-    padding: 32px 24px;
-  }
-
-  .cta h2 {
-    font-size: 24px;
-  }
-
-  .cta p {
-    font-size: 16px;
-  }
-
-  .ctaButton {
-    width: 100%;
-    padding: 14px 32px;
-    font-size: 18px;
-  }
+.successIcon {
+  font-size: 4rem;
+  margin-top: 2rem;
 }
