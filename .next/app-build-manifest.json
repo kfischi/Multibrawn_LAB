@@ -1,0 +1,309 @@
+{
+  "pages": {
+    "/_not-found/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/chunks/app/_not-found/page-14b93c959fa5eab8.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/eac98c5f9d4fbef9.css",
+      "static/chunks/app/layout-1f133ee182406c8d.js"
+    ],
+    "/api/chat/route": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/chunks/app/api/chat/route-16719c1a44aeb422.js"
+    ],
+    "/robots.txt/route": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/chunks/app/robots.txt/route-16719c1a44aeb422.js"
+    ],
+    "/sitemap.xml/route": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/chunks/app/sitemap.xml/route-16719c1a44aeb422.js"
+    ],
+    "/(marketing)/layout": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/cb7f3805cc28b89a.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/app/(marketing)/layout-c26647e1a4741b23.js"
+    ],
+    "/(marketing)/about/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/f547b760addd108a.css",
+      "static/chunks/app/(marketing)/about/page-f2eef729751956bc.js"
+    ],
+    "/(marketing)/blog/luxury-villa-wear-and-tear/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/blog/luxury-villa-wear-and-tear/page-d7f58baab820a512.js"
+    ],
+    "/(marketing)/blog/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/e12333d2ba504e32.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/blog/page-e4ec6f0ba69e78dc.js"
+    ],
+    "/(marketing)/contact/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/a9204cc43e99b258.css",
+      "static/chunks/app/(marketing)/contact/page-1c98cdae34c33a7f.js"
+    ],
+    "/(marketing)/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/27564b61603a2851.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/page-9c9bd936d5dfdbb6.js"
+    ],
+    "/(marketing)/tips/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/f547b760addd108a.css",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/tips/page-abe453e637a26555.js"
+    ],
+    "/(marketing)/accessibility-statement/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/cc1f1db9035eb69b.css",
+      "static/chunks/app/(marketing)/accessibility-statement/page-88d89c61bbbc8191.js"
+    ],
+    "/(marketing)/blog/breakfast-value-guide/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/blog/breakfast-value-guide/page-5439f291354387e8.js"
+    ],
+    "/(marketing)/blog/cheap-zimmer-warning/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/app/(marketing)/blog/cheap-zimmer-warning/page-5e3eee20cc7a4778.js"
+    ],
+    "/(marketing)/blog/adults-only-quiet-guide/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/blog/adults-only-quiet-guide/page-5439f291354387e8.js"
+    ],
+    "/(marketing)/blog/hidden-villa-costs/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/app/(marketing)/blog/hidden-villa-costs/page-5e3eee20cc7a4778.js"
+    ],
+    "/(marketing)/blog/heated-pool-guide/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/blog/heated-pool-guide/page-5439f291354387e8.js"
+    ],
+    "/(marketing)/blog/eilat-warning/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/app/(marketing)/blog/eilat-warning/page-5e3eee20cc7a4778.js"
+    ],
+    "/(marketing)/blog/last-minute-deals-guide/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/blog/last-minute-deals-guide/page-5439f291354387e8.js"
+    ],
+    "/(marketing)/blog/jacuzzi-hygiene-check/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/blog/jacuzzi-hygiene-check/page-5439f291354387e8.js"
+    ],
+    "/(marketing)/blog/massage-to-room-guide/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/blog/massage-to-room-guide/page-5439f291354387e8.js"
+    ],
+    "/(marketing)/blog/modesty-check-religious/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/blog/modesty-check-religious/page-5439f291354387e8.js"
+    ],
+    "/(marketing)/blog/photos-vs-reality-guide/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/blog/photos-vs-reality-guide/page-5439f291354387e8.js"
+    ],
+    "/(marketing)/blog/real-fireplace-guide/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/blog/real-fireplace-guide/page-5439f291354387e8.js"
+    ],
+    "/(marketing)/blog/shabbat-hatan-rosh-shaket/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/app/(marketing)/blog/shabbat-hatan-rosh-shaket/page-5e3eee20cc7a4778.js"
+    ],
+    "/(marketing)/blog/villa-dangers/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/b6d2176d86b8c5f7.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/app/(marketing)/blog/villa-dangers/page-5e3eee20cc7a4778.js"
+    ],
+    "/(marketing)/privacy/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/541381fe76c4ca59.css",
+      "static/chunks/app/(marketing)/privacy/page-68fc75e00e72e43e.js"
+    ],
+    "/(marketing)/shabbat-hatan/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/63503c779184e5a3.css",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/shabbat-hatan/page-5c9be76941265aaa.js"
+    ],
+    "/(marketing)/gallery/layout": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/chunks/app/(marketing)/gallery/layout-16719c1a44aeb422.js"
+    ],
+    "/(marketing)/gallery/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/css/eaabee5b6a62a9cf.css",
+      "static/chunks/1356-8565a6996da8e06e.js",
+      "static/chunks/app/(marketing)/gallery/page-c17dc4d6caec50aa.js"
+    ],
+    "/(marketing)/partnerships/layout": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/chunks/app/(marketing)/partnerships/layout-16719c1a44aeb422.js"
+    ],
+    "/(marketing)/partnerships/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/chunks/app/(marketing)/partnerships/page-6050e15ae5e86928.js"
+    ],
+    "/(marketing)/zimmerim-galil-elyon/layout": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/chunks/app/(marketing)/zimmerim-galil-elyon/layout-16719c1a44aeb422.js"
+    ],
+    "/(marketing)/zimmerim-galil-elyon/page": [
+      "static/chunks/webpack-4d3c33e0cae543c4.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-9494d7e861e97d68.js",
+      "static/chunks/main-app-6debc836f33c339d.js",
+      "static/chunks/app/(marketing)/zimmerim-galil-elyon/page-f952b1dc1e6e55ee.js"
+    ]
+  }
+}
