@@ -1,59 +1,23 @@
 import './globals.css';
-import type { Metadata } from 'next';
-import { Rubik } from 'next/font/google';
+import { Inter } from 'next/font/google';
 
-const rubik = Rubik({ subsets: ['hebrew'] });
+const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: 'Multibrawn - חופשות ואירועים',
-  description: 'מציאת לוקיישנים מושלמים לחופשות ואירועים',
-};
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="he" dir="rtl">
-      <head>
-        <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-      </head>
-      <body className={rubik.className}>
+      <body className={`${inter.className} bg-[#050505] text-white antialiased`}>
+        {/* Navbar פשוט וקבוע */}
+        <nav className="fixed top-0 w-full z-50 glass border-b border-white/10 px-6 py-4 flex justify-between items-center">
+          <div className="text-xl font-black italic tracking-tighter">MULTI<span className="text-cyan-400">BRAWN</span></div>
+          <div className="flex gap-6 text-sm font-bold uppercase tracking-widest">
+            <a href="/gallery" className="hover:text-cyan-400 transition-colors">Gallery</a>
+            <a href="/tips" className="hover:text-cyan-400 transition-colors">Tips</a>
+            <a href="/contact" className="hover:text-cyan-400 transition-colors">Contact</a>
+          </div>
+        </nav>
+        
         {children}
-
-        {/* N8N Chat Integration */}
-        <script type="module" dangerouslySetInnerHTML={{
-          __html: `
-            import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
-            createChat({
-              webhookUrl: 'http://n8n-z4scwo0kg0c088wsswwcc8kw.185.216.203.28.sslip.io/webhook-test/650fbb2de97b4ff593c0d4b0ab1c7a63',
-              mode: 'window',
-              target: '#n8n-chat',
-              showWelcomeScreen: true,
-              initialMessages: [
-                'היי! אני ערדית 👋',
-                'איך אני יכולה לעזור לכם למצוא את החופשה הבאה?'
-              ],
-              i18n: {
-                en: {
-                  title: 'ערדית - העוזרת הדיגיטלית',
-                  subtitle: 'זמינה עבורך 24/7',
-                  footer: '',
-                  getStarted: 'התחל שיחה',
-                  inputPlaceholder: 'כתוב הודעה...',
-                },
-              },
-              style: {
-                default: {
-                  background: '#0070f3',
-                  logo: 'https://res.cloudinary.com/dptyfvwyo/image/upload/v1760818934/22_tt9jvz.jpg',
-                }
-              }
-            });
-          `
-        }} />
       </body>
     </html>
   );
