@@ -1,79 +1,28 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import styles from './Home.module.css';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
-    <div className={styles.homeContainer}>
-      {/* Hero Section - הלב של דף הבית */}
-      <section className={styles.hero}>
-        {/* וידאו רקע איכותי מ-Cloudinary */}
-        <video 
-          autoPlay 
-          muted 
-          loop 
-          playsInline 
-          className={styles.heroVideo}
-        >
-          <source src="https://res.cloudinary.com/dptyfvwyo/video/upload/v1736545260/Multibrawn_Hero_Video.mp4" type="video/mp4" />
-        </video>
-
-        {/* Overlay כהה לקריאות הטקסט */}
-        <div className={styles.heroOverlay} />
-
-        <div className={styles.heroContent}>
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className={styles.mainTitle}
-          >
-            THE CANVAS FOR YOUR <br />
-            <span className="gradient-text">NEXT MASTERPIECE</span>
-          </motion.h1>
-
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className={styles.subtitle}
-          >
-            חיבור מדויק בין הפקות ללוקיישנים הכי אקסקלוסיביים בישראל. <br />
-            בלי פשרות. בלי כאבי ראש. רק קסם על הסט.
-          </motion.p>
-
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8 }}
-            className={styles.ctaWrapper}
-          >
-            <a href="/gallery" className={styles.primaryBtn}>גלו לוקיישנים</a>
-            <a href="/contact" className={styles.secondaryBtn}>דברו עם ערדית</a>
-          </motion.div>
+    <main className="min-h-screen bg-[#050505] flex flex-col items-center justify-center relative overflow-hidden">
+      {/* אפקט תאורה ברקע */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 blur-[120px] rounded-full" />
+      
+      <div className="relative z-10 text-center px-4">
+        <h1 className="text-7xl md:text-9xl font-black italic tracking-tighter text-white mb-4">
+          MULTI<span className="bg-gradient-to-r from-cyan-400 to-fuchsia-500 bg-clip-text text-transparent">BRAWN</span>
+        </h1>
+        <p className="text-gray-400 text-lg md:text-xl uppercase tracking-[0.3em] mb-12">
+          Premium Location Scouting
+        </p>
+        
+        <div className="flex flex-col md:flex-row gap-6 justify-center">
+          <Link href="/gallery" className="px-12 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-all uppercase tracking-widest text-sm">
+            Explore Gallery
+          </Link>
+          <Link href="/contact" className="px-12 py-4 border border-white/20 text-white font-bold rounded-full hover:bg-white/10 backdrop-blur-md transition-all uppercase tracking-widest text-sm">
+            Contact
+          </Link>
         </div>
-      </section>
-
-      {/* סקשן "למה אנחנו" - קצר וקולע */}
-      <section className={styles.features}>
-        <div className="container">
-          <div className={styles.featuresGrid}>
-            <div className="glass p-8 rounded-[var(--radius-lg)] text-center">
-              <h3 className="gradient-text mb-2">אוצרות מדויקת</h3>
-              <p>כל לוקיישן נבחר בקפידה כדי להתאים לסטנדרט הפקה בינלאומי.</p>
-            </div>
-            <div className="glass p-8 rounded-[var(--radius-lg)] text-center">
-              <h3 className="gradient-text mb-2">חיסכון בזמן</h3>
-              <p>מערכת סינון חכמה ובוט אישי שמוצאים לך את המקום המושלם תוך דקות.</p>
-            </div>
-            <div className="glass p-8 rounded-[var(--radius-lg)] text-center">
-              <h3 className="gradient-text mb-2">ליווי אישי</h3>
-              <p>אנחנו איתך מהרגע הראשון ועד שהצילום האחרון מסתיים.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+      </div>
+    </main>
   );
 }
