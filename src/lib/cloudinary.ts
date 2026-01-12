@@ -1,3 +1,4 @@
+// src/lib/cloudinary.ts
 import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
@@ -6,19 +7,22 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export async function getLocations() {
-  // אנחנו שולפים את כל התמונות מתיקייה ספציפית (למשל 'multibrawn')
-  const results = await cloudinary.search
-    .expression('folder:multibrawn/*')
-    .sort_by('created_at', 'desc')
-    .max_results(30)
-    .execute();
+export async function getLocations(tag = 'multibrawn') {
+  try {
+    const results = await cloudinary.search
+      .expression(`tags:${tag}`) // מחפש תמונות עם הטאג הספציפי
+      .sort_by('public_id', 'desc')
+      .max_results(100)
+      .execute();
 
-  return results.resources.map((resource: any) => ({
-    id: resource.public_id,
-    url: resource.secure_url,
-    title: resource.context?.custom?.caption || 'New Location',
-    width: resource.width,
-    height: resource.height,
-  }));
+    return results.resources.map((resource: any) => ({
+      id: resource.public_id,
+      url: resource.secure_url,
+      width: resource.width,
+      height: resource.height,
+    }));
+  } catch (error) {
+    console.error('Cloudinary Error:', error);
+    return [];
+  }
 }
